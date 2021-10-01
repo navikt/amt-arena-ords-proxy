@@ -18,7 +18,7 @@
     <description>Proxy mot Arena ORDS i FSS</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>15</java.version>
         <kotlin.version>1.4.21</kotlin.version>
     </properties>
 
