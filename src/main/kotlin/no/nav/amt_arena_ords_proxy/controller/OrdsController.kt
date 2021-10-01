@@ -1,13 +1,17 @@
 package no.nav.amt_arena_ords_proxy.controller
 
-import no.nav.amt_arena_ords_proxy.controller.dto.FnrDto
-import no.nav.amt_arena_ords_proxy.controller.dto.VirksomhetsnummerDto
+import no.nav.amt_arena_ords_proxy.controller.dto.PersonIdWithFnrDto
+import no.nav.amt_arena_ords_proxy.controller.dto.ArbeidsgiverDto
 import no.nav.amt_arena_ords_proxy.service.ArenaOrdsService
+import no.nav.amt_arena_ords_proxy.type.ArbeidsgiverId
+import no.nav.amt_arena_ords_proxy.type.PersonId
 import no.nav.security.token.support.core.api.Protected
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("/api/ords")
@@ -17,16 +21,24 @@ class OrdsController(
 
 	@Protected
 	@GetMapping("/fnr")
-	fun hentFnrForPersonId(@RequestParam("personId") personId: String): FnrDto  {
-		val fnr = arenaOrdsService.hentFnr(personId)
-		return FnrDto(fnr)
+	fun hentFnrForPersonId(@RequestParam("personId") personId: PersonId): PersonIdWithFnrDto  {
+		val personIdWithFnr = arenaOrdsService.hentFnr(personId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+
+		return PersonIdWithFnrDto(
+			personId = personIdWithFnr.personId,
+			fnr = personIdWithFnr.fnr,
+		)
 	}
 
 	@Protected
-	@GetMapping("/virksomhetsnummer")
-	fun hentVirksomhetsnummerForArbeidsgiverId(@RequestParam("arbeidsgiverId") arbeidsgiverId: String): VirksomhetsnummerDto  {
-		val virksomhetsnummer = arenaOrdsService.hentVirksomhetsnummer(arbeidsgiverId)
-		return VirksomhetsnummerDto(virksomhetsnummer)
+	@GetMapping("/arbeidsgiver")
+	fun hentArbeidsgiver(@RequestParam("arbeidsgiverId") arbeidsgiverId: ArbeidsgiverId): ArbeidsgiverDto  {
+		val arbeidsgiver = arenaOrdsService.hentArbeidsgiver(arbeidsgiverId)
+
+		return ArbeidsgiverDto(
+			virksomhetsnummer = arbeidsgiver.virksomhetsnummer,
+			moderSelskapOrgNr = arbeidsgiver.moderSelskapOrgNr
+		)
 	}
 
 }

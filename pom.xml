@@ -18,7 +18,7 @@
     <description>Proxy mot Arena ORDS i FSS</description>
 
     <properties>
-        <java.version>15</java.version>
+        <java.version>11</java.version>
         <kotlin.version>1.4.21</kotlin.version>
     </properties>
 
@@ -99,6 +99,12 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>2.27.2</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.mockito.kotlin</groupId>
             <artifactId>mockito-kotlin</artifactId>
