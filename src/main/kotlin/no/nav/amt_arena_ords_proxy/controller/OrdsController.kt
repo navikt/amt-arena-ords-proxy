@@ -33,11 +33,11 @@ class OrdsController(
 	@Protected
 	@GetMapping("/arbeidsgiver")
 	fun hentArbeidsgiver(@RequestParam("arbeidsgiverId") arbeidsgiverId: ArbeidsgiverId): ArbeidsgiverDto  {
-		val arbeidsgiver = arenaOrdsService.hentArbeidsgiver(arbeidsgiverId)
+		val arbeidsgiver = arenaOrdsService.hentArbeidsgiver(arbeidsgiverId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
 		return ArbeidsgiverDto(
-			virksomhetsnummer = arbeidsgiver.virksomhetsnummer,
-			moderSelskapOrgNr = arbeidsgiver.moderSelskapOrgNr
+			virksomhetsnummer = arbeidsgiver.bedriftsnr,
+			moderSelskapOrgNr = arbeidsgiver.orgnrMorselskap
 		)
 	}
 

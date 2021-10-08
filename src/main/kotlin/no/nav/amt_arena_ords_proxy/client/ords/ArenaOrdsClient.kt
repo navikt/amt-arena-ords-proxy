@@ -8,7 +8,7 @@ interface ArenaOrdsClient {
 
 	fun hentFnr(personIdListe: List<PersonId>): List<PersonIdWithFnr>
 
-	fun hentArbeidsgiver(arbeidsgiverId: ArbeidsgiverId): Arbeidsgiver
+	fun hentArbeidsgiver(arbeidsgiverId: ArbeidsgiverId): Arbeidsgiver?
 
 }
 
@@ -18,6 +18,6 @@ data class PersonIdWithFnr(
 )
 
 data class Arbeidsgiver(
-	val virksomhetsnummer: String,
-	val moderSelskapOrgNr: String,
+	val bedriftsnr: Int,
+	val orgnrMorselskap: Int,
 )

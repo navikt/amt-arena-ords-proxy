@@ -2,7 +2,6 @@ package no.nav.amt_arena_ords_proxy.config
 
 import no.nav.amt_arena_ords_proxy.client.ords.Arbeidsgiver
 import no.nav.amt_arena_ords_proxy.client.ords.ArenaOrdsClient
-import no.nav.amt_arena_ords_proxy.client.ords.ArenaOrdsClientImpl
 import no.nav.amt_arena_ords_proxy.client.ords.PersonIdWithFnr
 import no.nav.amt_arena_ords_proxy.type.ArbeidsgiverId
 import no.nav.amt_arena_ords_proxy.type.PersonId
@@ -27,8 +26,8 @@ class ApplicationConfig {
 
 			override fun hentArbeidsgiver(arbeidsgiverId: ArbeidsgiverId): Arbeidsgiver {
 				return Arbeidsgiver(
-					virksomhetsnummer = "TODO",
-					moderSelskapOrgNr = "TODO"
+					bedriftsnr = 123,
+					orgnrMorselskap = 456
 					)
 			}
 		}

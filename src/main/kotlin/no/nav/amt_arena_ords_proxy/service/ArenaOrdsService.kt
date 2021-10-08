@@ -22,7 +22,7 @@ class ArenaOrdsService(
 		return personIdWithFnrList[0]
 	}
 
-	fun hentArbeidsgiver(arbeidsgiverId: ArbeidsgiverId): Arbeidsgiver {
+	fun hentArbeidsgiver(arbeidsgiverId: ArbeidsgiverId): Arbeidsgiver? {
 		return arenaOrdsClient.hentArbeidsgiver(arbeidsgiverId)
 	}
 

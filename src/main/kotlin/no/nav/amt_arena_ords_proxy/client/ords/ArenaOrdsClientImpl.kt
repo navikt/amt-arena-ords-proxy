@@ -24,7 +24,7 @@ class ArenaOrdsClientImpl(
 		val requestBody = objectMapper.writeValueAsString(toHentFnrRequest(personIdListe))
 
 		val request = Request.Builder()
-			.url("$arenaOrdsUrl/some/path")
+			.url("$arenaOrdsUrl/arena/api/v1/person/identListe")
 			.addHeader("Authorization", "Bearer ${tokenProvider.getArenaOrdsToken()}")
 			.post(requestBody.toRequestBody(mediaTypeJson))
 			.build()
@@ -40,16 +40,21 @@ class ArenaOrdsClientImpl(
 		}
 	}
 
-	override fun hentArbeidsgiver(arbeidsgiverId: ArbeidsgiverId): Arbeidsgiver {
+	override fun hentArbeidsgiver(arbeidsgiverId: ArbeidsgiverId): Arbeidsgiver? {
 		val request = Request.Builder()
-			.url("$arenaOrdsUrl/some/other/path?arbeidsgiverId=$arbeidsgiverId")
+			.url("$arenaOrdsUrl/arena/api/v1/arbeidsgiver/ident")
 			.addHeader("Authorization", "Bearer ${tokenProvider.getArenaOrdsToken()}")
+			.addHeader("arbgivId", arbeidsgiverId.toString())
 			.get()
 			.build()
 
 		httpClient.newCall(request).execute().use { response ->
 			if (!response.isSuccessful) {
 				throw RuntimeException("Klarte ikke å hente virksomhetsnummer for arbeidsgiverId. Status: ${response.code}")
+			}
+
+			if (response.code == 204) {
+				return null
 			}
 
 			val body = response.body?.string() ?: throw RuntimeException("Body is missing from ORDS token request")
@@ -59,7 +64,7 @@ class ArenaOrdsClientImpl(
 	}
 
 	private data class PersonIdRequestItem(
-		val personID: PersonId,
+		val personId: PersonId,
 	)
 
 	private data class HentFnrRequest(
@@ -67,7 +72,7 @@ class ArenaOrdsClientImpl(
 	)
 
 	private data class PersonIdResponseItem(
-		val personID: PersonId,
+		val personId: PersonId,
 		val fnr: Fnr
 	)
 
@@ -78,7 +83,7 @@ class ArenaOrdsClientImpl(
 	private fun HentFnrResponse.toPersonIdWithFnrList(): List<PersonIdWithFnr> {
 		return this.personListe.map {
 			PersonIdWithFnr(
-				personId = it.personID,
+				personId = it.personId,
 				fnr = it.fnr
 			)
 		}
@@ -86,14 +91,14 @@ class ArenaOrdsClientImpl(
 
 
 	private data class HentVirksomhetsnummerResponse(
-		val virksomhetsnummer: String,
-		val moderSelskapOrgNr: String,
+		val bedriftsnr: Int,
+		val orgnrMorselskap: Int,
 	)
 
 	private fun HentVirksomhetsnummerResponse.toArbeidsgiver(): Arbeidsgiver {
 		return Arbeidsgiver(
-			virksomhetsnummer = this.virksomhetsnummer,
-			moderSelskapOrgNr = this.moderSelskapOrgNr
+			bedriftsnr = this.bedriftsnr,
+			orgnrMorselskap = this.orgnrMorselskap
 		)
 	}
 
