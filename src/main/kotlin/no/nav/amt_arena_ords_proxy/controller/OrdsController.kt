@@ -5,6 +5,8 @@ import no.nav.amt_arena_ords_proxy.controller.dto.ArbeidsgiverDto
 import no.nav.amt_arena_ords_proxy.service.ArenaOrdsService
 import no.nav.amt_arena_ords_proxy.type.ArbeidsgiverId
 import no.nav.amt_arena_ords_proxy.type.PersonId
+import no.nav.amt_arena_ords_proxy.utils.OrgNrUtils
+import no.nav.amt_arena_ords_proxy.utils.OrgNrUtils.orgNrtoStr
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
@@ -36,8 +38,8 @@ class OrdsController(
 		val arbeidsgiver = arenaOrdsService.hentArbeidsgiver(arbeidsgiverId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
 		return ArbeidsgiverDto(
-			virksomhetsnummer = arbeidsgiver.bedriftsnr,
-			moderSelskapOrgNr = arbeidsgiver.orgnrMorselskap
+			virksomhetsnummer = orgNrtoStr(arbeidsgiver.bedriftsnr),
+			organisasjonsnummerMorselskap = orgNrtoStr(arbeidsgiver.orgnrMorselskap)
 		)
 	}
 
