@@ -1,11 +1,10 @@
 package no.nav.amt_arena_ords_proxy.controller
 
-import no.nav.amt_arena_ords_proxy.controller.dto.PersonIdWithFnrDto
 import no.nav.amt_arena_ords_proxy.controller.dto.ArbeidsgiverDto
+import no.nav.amt_arena_ords_proxy.controller.dto.FnrDto
 import no.nav.amt_arena_ords_proxy.service.ArenaOrdsService
 import no.nav.amt_arena_ords_proxy.type.ArbeidsgiverId
 import no.nav.amt_arena_ords_proxy.type.PersonId
-import no.nav.amt_arena_ords_proxy.utils.OrgNrUtils
 import no.nav.amt_arena_ords_proxy.utils.OrgNrUtils.orgNrtoStr
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
@@ -23,12 +22,11 @@ class OrdsController(
 
 	@Protected
 	@GetMapping("/fnr")
-	fun hentFnrForPersonId(@RequestParam("personId") personId: PersonId): PersonIdWithFnrDto  {
+	fun hentFnrForPersonId(@RequestParam("personId") personId: PersonId): FnrDto  {
 		val personIdWithFnr = arenaOrdsService.hentFnr(personId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-		return PersonIdWithFnrDto(
-			personId = personIdWithFnr.personId,
-			fnr = personIdWithFnr.fnr,
+		return FnrDto(
+			fnr = personIdWithFnr.fnr
 		)
 	}
 
