@@ -42,6 +42,6 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: amt-tiltak
-          namespace: amt
-          cluster: dev-gcp
+        - application: poao-gcp-proxy
+          namespace: pto
+          cluster: dev-fss
