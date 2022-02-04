@@ -10,7 +10,7 @@ spec:
   port: 8080
   webproxy: true
   ingresses:
-    - https://amt-arena-ords-proxy.dev.intern.nav.no
+    - https://amt-arena-ords-proxy.intern.nav.no
   prometheus:
     enabled: true
     path: /internal/prometheus
@@ -36,7 +36,7 @@ spec:
       enabled: true
   env:
     - name: ARENA_ORDS_URL
-      value: https://arena-ords-q2.nais.preprod.local
+      value: https://arena-ords.nais.adeo.no
   envFrom:
     - secret: amt-arena-ords-proxy
   accessPolicy:
@@ -44,4 +44,4 @@ spec:
       rules:
         - application: amt-arena-acl
           namespace: amt
-          cluster: dev-gcp
+          cluster: prod-gcp
