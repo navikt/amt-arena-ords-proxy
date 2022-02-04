@@ -3,17 +3,19 @@ package no.nav.amt_arena_ords_proxy.client.ords
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.amt_arena_ords_proxy.utils.JsonUtils.getObjectMapper
-import okhttp3.*
+import no.nav.common.rest.client.RestClient.baseClient
+import okhttp3.Credentials
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.lang.RuntimeException
 import java.time.LocalDateTime
 
 class ArenaOrdsTokenProviderImpl(
 	private val clientId: String,
 	private val clientSecret: String,
 	private val arenaOrdsUrl: String,
-	private val httpClient: OkHttpClient = OkHttpClient(),
+	private val httpClient: OkHttpClient = baseClient(),
 	private val objectMapper: ObjectMapper = getObjectMapper()
 ) : ArenaOrdsTokenProvider {
 

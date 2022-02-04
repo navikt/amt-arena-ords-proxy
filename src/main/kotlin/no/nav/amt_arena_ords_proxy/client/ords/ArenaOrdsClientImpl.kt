@@ -5,16 +5,16 @@ import no.nav.amt_arena_ords_proxy.type.ArbeidsgiverId
 import no.nav.amt_arena_ords_proxy.type.Fnr
 import no.nav.amt_arena_ords_proxy.type.PersonId
 import no.nav.amt_arena_ords_proxy.utils.JsonUtils.getObjectMapper
+import no.nav.common.rest.client.RestClient.baseClient
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.lang.RuntimeException
 
 class ArenaOrdsClientImpl(
 	private val tokenProvider: ArenaOrdsTokenProvider,
 	private val arenaOrdsUrl: String,
-	private val httpClient: OkHttpClient = OkHttpClient(),
+	private val httpClient: OkHttpClient = baseClient(),
 	private val objectMapper: ObjectMapper = getObjectMapper(),
 ) : ArenaOrdsClient {
 
