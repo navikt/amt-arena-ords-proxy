@@ -36,7 +36,7 @@ spec:
       enabled: true
   env:
     - name: ARENA_ORDS_URL
-      value: https://arena-ords.nais.adeo.no
+      value: https://arena-ords-readonly.intern.nav.no
   envFrom:
     - secret: amt-arena-ords-proxy
   accessPolicy:
