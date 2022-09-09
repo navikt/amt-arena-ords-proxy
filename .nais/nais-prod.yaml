@@ -11,6 +11,7 @@ spec:
   webproxy: true
   ingresses:
     - https://amt-arena-ords-proxy.intern.nav.no
+    - https://amt-arena-ords-proxy.pub-fss-pub.nais.io
   prometheus:
     enabled: true
     path: /internal/prometheus
