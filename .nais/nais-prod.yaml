@@ -46,3 +46,6 @@ spec:
         - application: amt-arena-acl
           namespace: amt
           cluster: prod-gcp
+        - application: arena-aktivitet-acl
+          namespace: dab
+          cluster: prod-gcp
