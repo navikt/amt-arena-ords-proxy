@@ -74,5 +74,4 @@ class ArenaOrdsTokenProviderImpl(
 		@JsonAlias("expires_in")
 		val expiresIn: Long,
 	)
-
 }
