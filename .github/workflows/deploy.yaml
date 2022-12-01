@@ -43,21 +43,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Deploy application
+      - name: Deploy application to q1
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-fss
-          RESOURCE: .nais/nais-dev.yaml
+          RESOURCE: .nais/nais-dev-q1.yaml
           VAR: version=${{ env.IMAGE_TAG }}
-      - name: Create release
-        uses: actions/create-release@v1
+      - name: Deploy application to q2
+        uses: nais/deploy/actions/deploy@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: release/dev@${{ env.IMAGE_TAG }}
-          release_name: Release to dev
-          prerelease: true
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-fss
+          RESOURCE: .nais/nais-dev-q2.yaml
+          VAR: version=${{ env.IMAGE_TAG }}
 
   deploy-prod:
     name: Deploy application to prod

@@ -46,9 +46,6 @@ spec:
         - application: amt-arena-acl
           namespace: amt
           cluster: dev-gcp
-        - application: aktivitet-arena-acl
-          namespace: dab
-          cluster: dev-gcp
         - application: mulighetsrommet-api
           namespace: team-mulighetsrommet
           cluster: dev-gcp
