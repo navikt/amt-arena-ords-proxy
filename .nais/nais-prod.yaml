@@ -49,6 +49,6 @@ spec:
         - application: aktivitet-arena-acl
           namespace: dab
           cluster: prod-gcp
-        - application: mulighetsrommet-api
+        - application: mulighetsrommet-arena-adapter
           namespace: team-mulighetsrommet
           cluster: prod-gcp
