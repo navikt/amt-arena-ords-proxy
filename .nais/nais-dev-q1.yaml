@@ -10,8 +10,6 @@ spec:
   port: 8080
   webproxy: true
   ingresses:
-    - https://amt-arena-ords-proxy-q1.dev.intern.nav.no
-    - https://amt-arena-ords-proxy-q1.intern.dev.nav.no
     - https://amt-arena-ords-proxy-q1.dev-fss-pub.nais.io
   prometheus:
     enabled: true
