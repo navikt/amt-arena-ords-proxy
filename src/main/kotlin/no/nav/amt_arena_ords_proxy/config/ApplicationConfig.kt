@@ -4,7 +4,7 @@ import no.nav.amt_arena_ords_proxy.client.ords.ArenaOrdsClient
 import no.nav.amt_arena_ords_proxy.client.ords.ArenaOrdsClientImpl
 import no.nav.amt_arena_ords_proxy.client.ords.ArenaOrdsTokenProvider
 import no.nav.amt_arena_ords_proxy.client.ords.ArenaOrdsTokenProviderImpl
-import no.nav.common.log.LogFilter
+import no.nav.common.rest.filter.LogRequestFilter
 import no.nav.common.utils.EnvironmentUtils
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -17,10 +17,10 @@ import org.springframework.context.annotation.Profile
 @Profile("!local")
 @EnableJwtTokenValidation
 @EnableConfigurationProperties(EnvironmentProperties::class)
-class ApplicationConfig {
+open class ApplicationConfig {
 
 	@Bean
-	fun arenaOrdsTokenProvider(environmentProperties: EnvironmentProperties): ArenaOrdsTokenProvider {
+	open fun arenaOrdsTokenProvider(environmentProperties: EnvironmentProperties): ArenaOrdsTokenProvider {
 		return ArenaOrdsTokenProviderImpl(
 			clientId = environmentProperties.arenaOrdsClientId,
 			clientSecret = environmentProperties.arenaOrdsClientSecret,
@@ -29,7 +29,7 @@ class ApplicationConfig {
 	}
 
 	@Bean
-	fun arenaOrdsClient(environmentProperties: EnvironmentProperties, arenaOrdsTokenProvider: ArenaOrdsTokenProvider): ArenaOrdsClient {
+	open fun arenaOrdsClient(environmentProperties: EnvironmentProperties, arenaOrdsTokenProvider: ArenaOrdsTokenProvider): ArenaOrdsClient {
 		return ArenaOrdsClientImpl(
 			tokenProvider = arenaOrdsTokenProvider,
 			arenaOrdsUrl = environmentProperties.arenaOrdsUrl
@@ -37,14 +37,13 @@ class ApplicationConfig {
 	}
 
 	@Bean
-	fun logFilterRegistrationBean(): FilterRegistrationBean<LogFilter> {
-		val registration = FilterRegistrationBean<LogFilter>()
-		registration.filter = LogFilter(
+	open fun logFilterRegistrationBean(): FilterRegistrationBean<LogRequestFilter> {
+		val registration = FilterRegistrationBean<LogRequestFilter>()
+		registration.filter = LogRequestFilter(
 			EnvironmentUtils.requireApplicationName(), EnvironmentUtils.isDevelopment().orElse(false)
 		)
 		registration.order = 1
 		registration.addUrlPatterns("/*")
 		return registration
 	}
-
 }

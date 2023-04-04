@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.amt_arena_ords_proxy.type.ArbeidsgiverId
 import no.nav.amt_arena_ords_proxy.type.Fnr
 import no.nav.amt_arena_ords_proxy.type.PersonId
-import no.nav.amt_arena_ords_proxy.utils.JsonUtils.getObjectMapper
+import no.nav.amt_arena_ords_proxy.utils.JsonUtils
 import no.nav.common.rest.client.RestClient.baseClient
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -15,7 +15,7 @@ class ArenaOrdsClientImpl(
 	private val tokenProvider: ArenaOrdsTokenProvider,
 	private val arenaOrdsUrl: String,
 	private val httpClient: OkHttpClient = baseClient(),
-	private val objectMapper: ObjectMapper = getObjectMapper(),
+	private val objectMapper: ObjectMapper = JsonUtils.objectMapper
 ) : ArenaOrdsClient {
 
 	private val mediaTypeJson = "application/json".toMediaType()

@@ -5,8 +5,9 @@ import no.nav.amt_arena_ords_proxy.controller.dto.FnrDto
 import no.nav.amt_arena_ords_proxy.service.ArenaOrdsService
 import no.nav.amt_arena_ords_proxy.type.ArbeidsgiverId
 import no.nav.amt_arena_ords_proxy.type.PersonId
+import no.nav.amt_arena_ords_proxy.utils.Issuer
 import no.nav.amt_arena_ords_proxy.utils.OrgNrUtils.orgNrtoStr
-import no.nav.security.token.support.core.api.Protected
+import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -20,8 +21,8 @@ class OrdsController(
 	private val arenaOrdsService: ArenaOrdsService
 ) {
 
-	@Protected
 	@GetMapping("/fnr")
+	@ProtectedWithClaims(issuer = Issuer.AZURE_AD)
 	fun hentFnrForPersonId(@RequestParam("personId") personId: PersonId): FnrDto  {
 		val personIdWithFnr = arenaOrdsService.hentFnr(personId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
@@ -30,8 +31,8 @@ class OrdsController(
 		)
 	}
 
-	@Protected
 	@GetMapping("/arbeidsgiver")
+	@ProtectedWithClaims(issuer = Issuer.AZURE_AD)
 	fun hentArbeidsgiver(@RequestParam("arbeidsgiverId") arbeidsgiverId: ArbeidsgiverId): ArbeidsgiverDto  {
 		val arbeidsgiver = arenaOrdsService.hentArbeidsgiver(arbeidsgiverId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 

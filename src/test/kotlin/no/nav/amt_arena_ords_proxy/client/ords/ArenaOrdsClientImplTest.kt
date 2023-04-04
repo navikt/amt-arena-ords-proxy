@@ -1,52 +1,36 @@
 package no.nav.amt_arena_ords_proxy.client.ords
 
-import com.github.tomakehurst.wiremock.client.WireMock.*
-import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo
-import com.github.tomakehurst.wiremock.junit5.WireMockTest
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-@WireMockTest
 class ArenaOrdsClientImplTest {
+	val server = MockWebServer()
+	val serverUrl = server.url("").toString().removeSuffix("/")
 
 	@Test
-	fun `skal hente fnr for personid`(wmRuntimeInfo: WireMockRuntimeInfo) {
+	fun `skal hente fnr for personid`() {
 		val client = ArenaOrdsClientImpl(
 			object : ArenaOrdsTokenProvider {
 				override fun getArenaOrdsToken(): String {
 					return "TOKEN"
 				}
 			},
-			wmRuntimeInfo.httpBaseUrl,
+			serverUrl
 		)
 
-		givenThat(
-			post(urlEqualTo("/arena/api/v1/person/identListe"))
-				.withHeader("Authorization", equalTo("Bearer TOKEN"))
-				.withRequestBody(equalToJson(
-					"""
-						{
-						 "personListe" : [
-						 		{ "personId" : 12345 },
-								{ "personId" : 6789 }
-							]
-						}
-					""".trimIndent()
-				))
-				.willReturn(
-					aResponse()
-						.withStatus(200)
-						.withBody(
-							"""
-							{
-								"personListe": [
-									{ "personId": 12345, "fnr": "098765" },
-									{ "personId": 6789, "fnr": "235876" }
-								]
-							}
-						""".trimIndent()
-						)
-				)
+		server.enqueue(
+			MockResponse().setBody(
+				"""
+					{
+						"personListe": [
+							{ "personId": 12345, "fnr": "098765" },
+							{ "personId": 6789, "fnr": "235876" }
+						]
+					}
+				""".trimIndent()
+			)
 		)
 
 		val personIdWithFnrList = client.hentFnr(listOf(12345, 6789))
@@ -59,28 +43,22 @@ class ArenaOrdsClientImplTest {
 	}
 
 	@Test
-	fun `skal hente arbeidsgiver for arbeidsgiver id`(wmRuntimeInfo: WireMockRuntimeInfo) {
+	fun `skal hente arbeidsgiver for arbeidsgiver id`() {
 		val client = ArenaOrdsClientImpl(
 			object : ArenaOrdsTokenProvider {
 				override fun getArenaOrdsToken(): String {
 					return "TOKEN"
 				}
 			},
-			wmRuntimeInfo.httpBaseUrl,
+			serverUrl
 		)
 
-		givenThat(
-			get(urlEqualTo("/arena/api/v1/arbeidsgiver/ident"))
-				.withHeader("Authorization", equalTo("Bearer TOKEN"))
-				.willReturn(
-					aResponse()
-						.withStatus(200)
-						.withBody(
-							"""
-								{ "bedriftsnr": 123456, "orgnrMorselskap": 98765 }
-							""".trimIndent()
-						)
-				)
+		server.enqueue(
+			MockResponse().setBody(
+				"""
+					{ "bedriftsnr": 123456, "orgnrMorselskap": 98765 }
+				""".trimIndent()
+			)
 		)
 
 		val arbeidsgiver = client.hentArbeidsgiver(555555)
@@ -91,29 +69,20 @@ class ArenaOrdsClientImplTest {
 	}
 
 	@Test
-	fun `skal returnere null hvis ORDS svarer med status 204`(wmRuntimeInfo: WireMockRuntimeInfo) {
+	fun `skal returnere null hvis ORDS svarer med status 204`() {
 		val client = ArenaOrdsClientImpl(
 			object : ArenaOrdsTokenProvider {
 				override fun getArenaOrdsToken(): String {
 					return "TOKEN"
 				}
 			},
-			wmRuntimeInfo.httpBaseUrl,
+			serverUrl
 		)
 
-		givenThat(
-			get(urlEqualTo("/arena/api/v1/arbeidsgiver/ident"))
-				.withHeader("Authorization", equalTo("Bearer TOKEN"))
-				.willReturn(
-					aResponse()
-						.withStatus(204)
-				)
-		)
+		server.enqueue(MockResponse().setResponseCode(204))
 
 		val arbeidsgiver = client.hentArbeidsgiver(555555)
 
 		assertNull(arbeidsgiver)
 	}
-
-
 }
