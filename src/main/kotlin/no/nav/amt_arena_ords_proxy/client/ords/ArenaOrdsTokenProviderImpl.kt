@@ -2,7 +2,7 @@ package no.nav.amt_arena_ords_proxy.client.ords
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.amt_arena_ords_proxy.utils.JsonUtils.getObjectMapper
+import no.nav.amt_arena_ords_proxy.utils.JsonUtils
 import no.nav.common.rest.client.RestClient.baseClient
 import okhttp3.Credentials
 import okhttp3.MediaType.Companion.toMediaType
@@ -16,7 +16,7 @@ class ArenaOrdsTokenProviderImpl(
 	private val clientSecret: String,
 	private val arenaOrdsUrl: String,
 	private val httpClient: OkHttpClient = baseClient(),
-	private val objectMapper: ObjectMapper = getObjectMapper()
+	private val objectMapper: ObjectMapper = JsonUtils.objectMapper
 ) : ArenaOrdsTokenProvider {
 
 	// Consider the token expired before actual expiration to allow for clock skew, network lag etc...

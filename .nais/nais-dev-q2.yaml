@@ -6,12 +6,10 @@ metadata:
   labels:
     team: amt
 spec:
-  image: ghcr.io/navikt/amt-arena-ords-proxy/amt-arena-ords-proxy:{{version}}
+  image: {{image}}
   port: 8080
   webproxy: true
   ingresses:
-    - https://amt-arena-ords-proxy.dev.intern.nav.no
-    - https://amt-arena-ords-proxy.intern.dev.nav.no
     - https://amt-arena-ords-proxy.dev-fss-pub.nais.io
   prometheus:
     enabled: true
