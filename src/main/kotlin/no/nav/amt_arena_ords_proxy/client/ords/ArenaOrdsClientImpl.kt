@@ -20,6 +20,7 @@ class ArenaOrdsClientImpl(
 
 	private val mediaTypeJson = "application/json".toMediaType()
 
+	//https://confluence.adeo.no/display/ARENA/identListe
 	override fun hentFnr(personIdListe: List<PersonId>): List<PersonIdWithFnr> {
 		val requestBody = objectMapper.writeValueAsString(toHentFnrRequest(personIdListe))
 

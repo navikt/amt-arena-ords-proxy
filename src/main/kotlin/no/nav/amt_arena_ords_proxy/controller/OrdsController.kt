@@ -24,11 +24,9 @@ class OrdsController(
 	@GetMapping("/fnr")
 	@ProtectedWithClaims(issuer = Issuer.AZURE_AD)
 	fun hentFnrForPersonId(@RequestParam("personId") personId: PersonId): FnrDto  {
-		val personIdWithFnr = arenaOrdsService.hentFnr(personId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
-
-		return FnrDto(
-			fnr = personIdWithFnr.fnr
-		)
+		arenaOrdsService.hentFnr(personId)?.fnr
+			?.let { return FnrDto(fnr = it) }
+			?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 	}
 
 	@GetMapping("/arbeidsgiver")
