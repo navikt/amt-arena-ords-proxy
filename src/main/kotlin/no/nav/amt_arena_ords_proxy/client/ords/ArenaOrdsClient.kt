@@ -14,7 +14,7 @@ interface ArenaOrdsClient {
 
 data class PersonIdWithFnr(
 	val personId: PersonId,
-	val fnr: Fnr,
+	val fnr: Fnr?, //Fnr kan være null i visse tilfeller fordi man i eldre versjoner av arena kunne nulle ut fnr
 )
 
 data class Arbeidsgiver(
