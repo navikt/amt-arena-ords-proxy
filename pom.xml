@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.6</version>
+        <version>3.1.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -37,8 +37,9 @@
         <maven.compiler.target>17</maven.compiler.target>
         <java.version>17</java.version>
 
-        <common.version>3.2023.05.02_06.50-0576b4e09008</common.version>
+        <common.version>3.2023.05.08_11.05-d13adbef1e85</common.version>
         <okhttp.version>4.11.0</okhttp.version>
+        <tokenvalidation.version>3.1.0</tokenvalidation.version>
     </properties>
 
     <dependencies>
@@ -93,7 +94,7 @@
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>token-validation-spring</artifactId>
-            <version>3.0.11</version>
+            <version>${tokenvalidation.version}</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
