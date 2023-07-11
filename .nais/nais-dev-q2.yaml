@@ -48,3 +48,6 @@ spec:
         - application: mulighetsrommet-arena-adapter
           namespace: team-mulighetsrommet
           cluster: dev-gcp
+        - application: aktivitet-arena-acl
+          namespace: dab
+          cluster: dev-gcp
