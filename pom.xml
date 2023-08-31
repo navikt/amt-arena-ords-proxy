@@ -39,7 +39,7 @@
 
         <common.version>3.2023.07.07_09.10-85326e9557f0</common.version>
         <okhttp.version>4.11.0</okhttp.version>
-        <tokenvalidation.version>3.1.4</tokenvalidation.version>
+        <tokenvalidation.version>3.1.5</tokenvalidation.version>
     </properties>
 
     <dependencies>
