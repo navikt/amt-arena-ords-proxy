@@ -23,8 +23,8 @@
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
         <repository>
-            <id>jitpack</id>
-            <url>https://jitpack.io</url>
+            <id>github</id>
+            <url>https://github-package-registry-mirror.gc.nav.no/cached/maven-release</url>
         </repository>
     </repositories>
 
@@ -37,7 +37,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <java.version>17</java.version>
 
-        <common.version>3.2023.07.07_09.10-85326e9557f0</common.version>
+        <common.version>3.2023.09.13_04.55-a8ff452fbd94</common.version>
         <okhttp.version>4.11.0</okhttp.version>
         <tokenvalidation.version>3.1.5</tokenvalidation.version>
     </properties>
@@ -81,12 +81,12 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.navikt.common-java-modules</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>log</artifactId>
             <version>${common.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.navikt.common-java-modules</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>rest</artifactId>
             <version>${common.version}</version>
         </dependency>
