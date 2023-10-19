@@ -38,7 +38,7 @@
         <java.version>17</java.version>
 
         <common.version>3.2023.09.13_04.55-a8ff452fbd94</common.version>
-        <okhttp.version>4.11.0</okhttp.version>
+        <okhttp.version>4.12.0</okhttp.version>
         <tokenvalidation.version>3.1.7</tokenvalidation.version>
     </properties>
 
