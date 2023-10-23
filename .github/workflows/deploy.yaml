@@ -23,12 +23,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Set up cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-maven-
+          cache: 'maven'
       - name: Build maven artifacts
         run: mvn -B package
       - name: Dependency submission (for dependabot)
@@ -70,8 +65,6 @@ jobs:
     name: Deploy application to prod
     needs: [ test-build-and-push, deploy-dev ]
     runs-on: ubuntu-latest
-    permissions:
-      contents: "write"
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
@@ -83,9 +76,3 @@ jobs:
           CLUSTER: prod-fss
           RESOURCE: .nais/nais-prod.yaml
           VAR: image=${{ needs.test-build-and-push.outputs.image }}
-      - name: Create release
-        uses: softprops/action-gh-release@v1
-        with:
-          name: Release to prod
-          tag_name: release/prod@${{ github.sha }}
-          prerelease: false
