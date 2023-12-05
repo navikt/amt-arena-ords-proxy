@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
+        <version>3.2.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -31,7 +31,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
-        <kotlin.version>1.9.20</kotlin.version>
+        <kotlin.version>1.9.21</kotlin.version>
         <kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -39,7 +39,7 @@
 
         <common.version>3.2023.10.18_13.28-58db82ecb1a5</common.version>
         <okhttp.version>4.12.0</okhttp.version>
-        <tokenvalidation.version>3.1.8</tokenvalidation.version>
+        <tokenvalidation.version>3.2.0</tokenvalidation.version>
         <!-- overstyrer sårbar dependency-->
         <snakeyaml.version>2.2</snakeyaml.version>
     </properties>
@@ -113,7 +113,7 @@
         <dependency>
             <groupId>org.mockito.kotlin</groupId>
             <artifactId>mockito-kotlin</artifactId>
-            <version>5.1.0</version>
+            <version>5.2.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
