@@ -28,17 +28,12 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
-      - name: Setup java
+      - name: Set up java
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 21
-      - name: Set up cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-maven-
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
       - name: Build maven artifacts
         run: mvn -B package
       - name: Perform CodeQL Analysis
