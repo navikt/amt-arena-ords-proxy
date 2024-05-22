@@ -37,11 +37,8 @@
         <maven.compiler.target>21</maven.compiler.target>
         <java.version>21</java.version>
 
-        <common.version>3.2023.12.12_13.53-510909d4aa1a</common.version>
-        <okhttp.version>4.12.0</okhttp.version>
+        <common.version>3.2024.04.22_13.50-7815154a2573</common.version>
         <tokenvalidation.version>4.1.7</tokenvalidation.version>
-
-        <logback.version>1.4.14</logback.version>
     </properties>
 
     <dependencies>
