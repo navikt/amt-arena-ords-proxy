@@ -74,7 +74,7 @@ class ArenaOrdsClientImpl(
 
 	private data class PersonIdResponseItem(
 		val personId: PersonId,
-		val fnr: Fnr
+		val fnr: Fnr?
 	)
 
 	private data class HentFnrResponse(
