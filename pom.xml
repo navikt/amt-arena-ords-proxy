@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version>
+        <version>3.4.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -39,6 +39,7 @@
 
         <common.version>3.2024.10.25_13.44-9db48a0dbe67</common.version>
         <tokenvalidation.version>5.0.11</tokenvalidation.version>
+        <okhttp.version>4.12.0</okhttp.version>
     </properties>
 
     <dependencies>
