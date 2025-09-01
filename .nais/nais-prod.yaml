@@ -25,11 +25,11 @@ spec:
     max: 2
     scalingStrategy:
       cpu:
-        thresholdPercentage: 100
+        thresholdPercentage: 300
   resources:
     requests:
-      cpu: 50m
-      memory: 356Mi
+      cpu: 20m
+      memory: 335Mi
     limits:
       memory: 1024Mi
   azure:
