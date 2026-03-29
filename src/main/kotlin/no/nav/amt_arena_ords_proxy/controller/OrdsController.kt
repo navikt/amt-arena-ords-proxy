@@ -18,26 +18,33 @@ import org.springframework.web.server.ResponseStatusException
 @RestController
 @RequestMapping("/api/ords")
 class OrdsController(
-	private val arenaOrdsService: ArenaOrdsService
+	private val arenaOrdsService: ArenaOrdsService,
 ) {
-
 	@GetMapping("/fnr")
 	@ProtectedWithClaims(issuer = Issuer.AZURE_AD)
-	fun hentFnrForPersonId(@RequestParam("personId") personId: PersonId): FnrDto  {
-		arenaOrdsService.hentFnr(personId)?.fnr
-			?.let { return FnrDto(fnr = it) }
-			?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+	fun hentFnrForPersonId(
+		@RequestParam("personId") personId: PersonId,
+	): FnrDto {
+		val fnr =
+			arenaOrdsService
+				.hentFnr(personId)
+				?.fnr
+				?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+
+		return FnrDto(fnr)
 	}
 
 	@GetMapping("/arbeidsgiver")
 	@ProtectedWithClaims(issuer = Issuer.AZURE_AD)
-	fun hentArbeidsgiver(@RequestParam("arbeidsgiverId") arbeidsgiverId: ArbeidsgiverId): ArbeidsgiverDto  {
-		val arbeidsgiver = arenaOrdsService.hentArbeidsgiver(arbeidsgiverId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+	fun hentArbeidsgiver(
+		@RequestParam("arbeidsgiverId") arbeidsgiverId: ArbeidsgiverId,
+	): ArbeidsgiverDto {
+		val arbeidsgiver =
+			arenaOrdsService.hentArbeidsgiver(arbeidsgiverId) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
 		return ArbeidsgiverDto(
 			virksomhetsnummer = orgNrtoStr(arbeidsgiver.bedriftsnr),
-			organisasjonsnummerMorselskap = orgNrtoStr(arbeidsgiver.orgnrMorselskap)
+			organisasjonsnummerMorselskap = orgNrtoStr(arbeidsgiver.orgnrMorselskap),
 		)
 	}
-
 }

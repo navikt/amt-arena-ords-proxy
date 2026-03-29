@@ -21,16 +21,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Set up java
+
+      - name: Setup Java
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '21'
-          cache: 'maven'
-      - name: Build maven artifacts
-        run: mvn -B package
-      - name: Dependency submission (for dependabot)
-        uses: advanced-security/maven-dependency-submission-action@v5
+          java-version: 25
+          cache: gradle
+
+      - name: Setup Gradle to generate and submit dependency graphs
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          dependency-graph: generate-and-submit
+
+      - name: Build artifacts
+        run: ./gradlew build --no-daemon
+
       - name: docker-build-push
         uses: nais/docker-build-push@v0
         id: docker-build-push
@@ -51,12 +57,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
       - name: Deploy application to q1
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-fss
           RESOURCE: .nais/nais-dev-q1.yaml
           VAR: image=${{ needs.test-build-and-push.outputs.image }}
+
       - name: Deploy application to q2
         uses: nais/deploy/actions/deploy@v2
         env:
@@ -74,6 +82,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
       - name: Deploy application
         uses: nais/deploy/actions/deploy@v2
         env:

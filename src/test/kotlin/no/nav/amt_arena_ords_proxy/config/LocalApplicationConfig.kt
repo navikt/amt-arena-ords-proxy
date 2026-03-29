@@ -9,11 +9,10 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-open class LocalApplicationConfig {
-
+class LocalApplicationConfig {
 	@Bean
-	open fun arenaOrdsClient(): ArenaOrdsClient {
-		return object: ArenaOrdsClient {
+	fun arenaOrdsClient(): ArenaOrdsClient =
+		object : ArenaOrdsClient {
 			override fun hentFnr(personIdListe: List<PersonId>): List<PersonIdWithFnr> {
 				TODO("Not yet implemented")
 			}
@@ -21,8 +20,5 @@ open class LocalApplicationConfig {
 			override fun hentArbeidsgiver(arbeidsgiverId: ArbeidsgiverId): Arbeidsgiver {
 				TODO("Not yet implemented")
 			}
-
 		}
-	}
-
 }

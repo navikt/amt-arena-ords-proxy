@@ -12,35 +12,45 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import tools.jackson.databind.ObjectMapper
 
 @Configuration
 @Profile("!local")
 @EnableJwtTokenValidation
 @EnableConfigurationProperties(EnvironmentProperties::class)
-open class ApplicationConfig {
-
+class ApplicationConfig {
 	@Bean
-	open fun arenaOrdsTokenProvider(environmentProperties: EnvironmentProperties): ArenaOrdsTokenProvider {
-		return ArenaOrdsTokenProviderImpl(
+	fun arenaOrdsTokenProvider(
+		environmentProperties: EnvironmentProperties,
+		objectMapper: ObjectMapper,
+	): ArenaOrdsTokenProvider =
+		ArenaOrdsTokenProviderImpl(
 			clientId = environmentProperties.arenaOrdsClientId,
 			clientSecret = environmentProperties.arenaOrdsClientSecret,
-			arenaOrdsUrl = environmentProperties.arenaOrdsUrl
+			arenaOrdsUrl = environmentProperties.arenaOrdsUrl,
+			objectMapper = objectMapper,
 		)
-	}
 
 	@Bean
-	open fun arenaOrdsClient(environmentProperties: EnvironmentProperties, arenaOrdsTokenProvider: ArenaOrdsTokenProvider): ArenaOrdsClient {
-		return ArenaOrdsClientImpl(
+	fun arenaOrdsClient(
+		environmentProperties: EnvironmentProperties,
+		arenaOrdsTokenProvider: ArenaOrdsTokenProvider,
+		objectMapper: ObjectMapper,
+	): ArenaOrdsClient =
+		ArenaOrdsClientImpl(
 			tokenProvider = arenaOrdsTokenProvider,
-			arenaOrdsUrl = environmentProperties.arenaOrdsUrl
+			arenaOrdsUrl = environmentProperties.arenaOrdsUrl,
+			objectMapper = objectMapper,
 		)
-	}
 
 	@Bean
-	open fun logFilterRegistrationBean(): FilterRegistrationBean<LogRequestFilter> {
+	fun logFilterRegistrationBean(): FilterRegistrationBean<LogRequestFilter> {
 		val registration = FilterRegistrationBean<LogRequestFilter>()
-		registration.filter = LogRequestFilter(
-			EnvironmentUtils.requireApplicationName(), EnvironmentUtils.isDevelopment().orElse(false)
+		registration.setFilter(
+			LogRequestFilter(
+				EnvironmentUtils.requireApplicationName(),
+				EnvironmentUtils.isDevelopment().orElse(false),
+			),
 		)
 		registration.order = 1
 		registration.addUrlPatterns("/*")
