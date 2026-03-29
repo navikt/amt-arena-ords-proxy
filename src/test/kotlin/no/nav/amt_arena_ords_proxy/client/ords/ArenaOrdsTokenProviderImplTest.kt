@@ -4,28 +4,37 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.json.JsonTest
+import tools.jackson.databind.ObjectMapper
 
+@JsonTest
 class ArenaOrdsTokenProviderImplTest {
 	val server = MockWebServer()
 	val serverUrl = server.url("").toString().removeSuffix("/")
 
+	@Autowired
+	private lateinit var objectMapper: ObjectMapper
+
 	@Test
 	fun `should make correct request when fetching ORDS token`() {
-		val tokenProvider = ArenaOrdsTokenProviderImpl(
-			"TEST",
-			"TEST_SECRET",
-			serverUrl
-		)
+		val tokenProvider =
+			ArenaOrdsTokenProviderImpl(
+				clientId = "TEST",
+				clientSecret = "TEST_SECRET",
+				arenaOrdsUrl = serverUrl,
+				objectMapper = objectMapper,
+			)
 
 		server.enqueue(
 			MockResponse().setBody(
 				"""
-					{
-						"access_token": "TOKEN",
-						"expires_in": 100
-					}
-				""".trimIndent()
-			)
+				{
+					"access_token": "TOKEN",
+					"expires_in": 100
+				}
+				""".trimIndent(),
+			),
 		)
 
 		assertEquals("TOKEN", tokenProvider.getArenaOrdsToken())
@@ -33,21 +42,23 @@ class ArenaOrdsTokenProviderImplTest {
 
 	@Test
 	fun `should cache ORDS token`() {
-		val tokenProvider = ArenaOrdsTokenProviderImpl(
-			"TEST",
-			"TEST_SECRET",
-			serverUrl
-		)
+		val tokenProvider =
+			ArenaOrdsTokenProviderImpl(
+				clientId = "TEST",
+				clientSecret = "TEST_SECRET",
+				arenaOrdsUrl = serverUrl,
+				objectMapper = objectMapper,
+			)
 
 		server.enqueue(
 			MockResponse().setBody(
 				"""
-					{
-						"access_token": "TOKEN",
-						"expires_in": 100
-					}
-				""".trimIndent()
-			)
+				{
+					"access_token": "TOKEN",
+					"expires_in": 100
+				}
+				""".trimIndent(),
+			),
 		)
 
 		tokenProvider.getArenaOrdsToken()
@@ -58,31 +69,33 @@ class ArenaOrdsTokenProviderImplTest {
 
 	@Test
 	fun `should fetch new token if cached token is close to expired`() {
-		val tokenProvider = ArenaOrdsTokenProviderImpl(
-			"TEST",
-			"TEST_SECRET",
-			serverUrl
-		)
+		val tokenProvider =
+			ArenaOrdsTokenProviderImpl(
+				clientId = "TEST",
+				clientSecret = "TEST_SECRET",
+				arenaOrdsUrl = serverUrl,
+				objectMapper = objectMapper,
+			)
 
 		server.enqueue(
 			MockResponse().setBody(
 				"""
-					{
-						"access_token": "TOKEN",
-						"expires_in": 1
-					}
-				""".trimIndent()
-			)
+				{
+					"access_token": "TOKEN",
+					"expires_in": 1
+				}
+				""".trimIndent(),
+			),
 		)
 		server.enqueue(
 			MockResponse().setBody(
 				"""
-					{
-						"access_token": "TOKEN",
-						"expires_in": 100
-					}
-				""".trimIndent()
-			)
+				{
+					"access_token": "TOKEN",
+					"expires_in": 100
+				}
+				""".trimIndent(),
+			),
 		)
 
 		tokenProvider.getArenaOrdsToken()

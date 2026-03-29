@@ -7,8 +7,6 @@ import org.springframework.test.context.ActiveProfiles
 @ActiveProfiles("local")
 @SpringBootTest
 class ApplicationTest {
-
 	@Test
 	fun `application should start without problems`() {}
-
 }

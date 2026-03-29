@@ -1,7 +1,6 @@
 package no.nav.amt_arena_ords_proxy.utils
 
 object OrgNrUtils {
-
 	fun orgNrtoStr(orgNr: Int): String {
 		val strBuilder = StringBuilder(orgNr.toString())
 
@@ -12,5 +11,4 @@ object OrgNrUtils {
 
 		return strBuilder.toString()
 	}
-
 }

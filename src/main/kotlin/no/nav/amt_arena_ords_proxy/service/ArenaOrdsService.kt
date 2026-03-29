@@ -9,21 +9,17 @@ import org.springframework.stereotype.Service
 
 @Service
 class ArenaOrdsService(
-	private val arenaOrdsClient: ArenaOrdsClient
+	private val arenaOrdsClient: ArenaOrdsClient,
 ) {
-
 	fun hentFnr(personId: PersonId): PersonIdWithFnr? {
 		val personIdWithFnrList = arenaOrdsClient.hentFnr(listOf(personId))
 
-		if (personIdWithFnrList.isEmpty()) {
-			return null
+		return if (personIdWithFnrList.isEmpty()) {
+			null
+		} else {
+			personIdWithFnrList[0]
 		}
-
-		return personIdWithFnrList[0]
 	}
 
-	fun hentArbeidsgiver(arbeidsgiverId: ArbeidsgiverId): Arbeidsgiver? {
-		return arenaOrdsClient.hentArbeidsgiver(arbeidsgiverId)
-	}
-
+	fun hentArbeidsgiver(arbeidsgiverId: ArbeidsgiverId): Arbeidsgiver? = arenaOrdsClient.hentArbeidsgiver(arbeidsgiverId)
 }
