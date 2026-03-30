@@ -12,5 +12,4 @@ class OrgNrUtilsTest {
 		assertEquals("123456789", OrgNrUtils.orgNrtoStr(123456789))
 		assertEquals("1234567890", OrgNrUtils.orgNrtoStr(1234567890))
 	}
-
 }
