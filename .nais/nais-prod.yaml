@@ -8,18 +8,24 @@ metadata:
 spec:
   image: {{image}}
   port: 8080
+  terminationGracePeriodSeconds: 60
   webproxy: true
   ingresses:
     - https://amt-arena-ords-proxy.prod-fss-pub.nais.io
   prometheus:
     enabled: true
     path: /internal/prometheus
+
+  startup:
+    path: /internal/health/liveness
+    initialDelay: 5
+    periodSeconds: 5
+    failureThreshold: 10
   readiness:
     path: /internal/health/readiness
-    initialDelay: 20
   liveness:
     path: /internal/health/liveness
-    initialDelay: 20
+
   replicas:
     disableAutoScaling: true
     min: 1
@@ -34,6 +40,8 @@ spec:
     application:
       enabled: true
   env:
+    - name: JDK_JAVA_OPTIONS
+      value: "-Xshare:off --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow"
     - name: ARENA_ORDS_URL
       value: https://arena-ords.nais.adeo.no
   envFrom:
