@@ -19,10 +19,18 @@ repositories {
     maven { url = uri("https://github-package-registry-mirror.gc.nav.no/cached/maven-release") }
 }
 
-val jacksonModuleKotlinVersion = "3.1.1"
+val jacksonModuleKotlinVersion = "3.1.2"
 val commonVersion = "3.2026.04.08_08.37-229807cc181a"
 val tokenValidationVersion = "6.0.5"
 val okHttpVersion = "5.3.2"
+
+dependencyManagement {
+    imports {
+        mavenBom("tools.jackson:jackson-bom:$jacksonModuleKotlinVersion")
+    }
+}
+
+extra["tomcat.version"] = "11.0.21"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
