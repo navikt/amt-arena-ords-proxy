@@ -34,6 +34,7 @@ class OrdsController(
 		return FnrDto(fnr)
 	}
 
+	//Brukes av valp
 	@GetMapping("/arbeidsgiver")
 	@ProtectedWithClaims(issuer = Issuer.AZURE_AD)
 	fun hentArbeidsgiver(

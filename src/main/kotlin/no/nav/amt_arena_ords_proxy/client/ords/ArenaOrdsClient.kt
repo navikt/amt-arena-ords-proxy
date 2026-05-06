@@ -16,6 +16,6 @@ data class PersonIdWithFnr(
 )
 
 data class Arbeidsgiver(
-	val bedriftsnr: Int,
+	val bedriftsnr: Int?,
 	val orgnrMorselskap: Int,
 )
