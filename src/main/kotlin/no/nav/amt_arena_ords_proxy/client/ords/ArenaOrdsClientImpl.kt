@@ -92,7 +92,7 @@ class ArenaOrdsClientImpl(
 		}
 
 	private data class HentVirksomhetsnummerResponse(
-		val bedriftsnr: Int,
+		val bedriftsnr: Int?,
 		val orgnrMorselskap: Int,
 	)
 
