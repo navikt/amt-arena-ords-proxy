@@ -19,7 +19,7 @@ repositories {
     maven { url = uri("https://github-package-registry-mirror.gc.nav.no/cached/maven-release") }
 }
 
-val jacksonModuleKotlinVersion = "3.1.3"
+val jacksonModuleKotlinVersion = "3.1.4"
 val commonVersion = "4.2026.05.19_05.29-4b5633c82ec0"
 val tokenValidationVersion = "6.0.8"
 val okHttpVersion = "5.3.2"
