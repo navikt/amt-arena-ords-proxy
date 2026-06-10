@@ -20,7 +20,7 @@ repositories {
 }
 
 val jacksonModuleKotlinVersion = "3.1.3"
-val commonVersion = "4.2026.05.19_05.29-4b5633c82ec0"
+val commonVersion = "4.2026.05.29_05.35-a81a45859c9c"
 val tokenValidationVersion = "6.0.8"
 val okHttpVersion = "5.3.2"
 
