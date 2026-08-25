@@ -19,10 +19,10 @@ repositories {
     maven { url = uri("https://github-package-registry-mirror.gc.nav.no/cached/maven-release") }
 }
 
-val jacksonModuleKotlinVersion = "3.2.1"
+val jacksonModuleKotlinVersion = "3.2.2"
 val commonVersion = "4.2026.07.17_11.36-f5bba2c96561"
 val tokenValidationVersion = "6.0.11"
-val okHttpVersion = "5.4.0"
+val okHttpVersion = "5.5.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
