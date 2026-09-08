@@ -16,7 +16,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 25
-          cache: gradle
 
       - name: Run tests
         run: ./gradlew check --no-daemon
