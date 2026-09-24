@@ -24,38 +24,31 @@ val commonVersion = "4.2026.09.14_05.43-2bd32bda23c4"
 val tokenValidationVersion = "6.0.12"
 val okHttpVersion = "5.5.0"
 
-// midlertidig fix for CVE-2026-65182
-extra["tomcat.version"] = "11.0.25"
-
 dependencies {
     constraints {
         implementation("at.yawk.lz4:lz4-java") {
-            version {
-                strictly("1.11.2")
-            }
+            version { strictly("1.11.2") }
             because("Fixes CVE-2026-59949")
         }
     }
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-logging")
+    implementation("org.springframework.boot:spring-boot-starter-web") {
+        exclude(group = "org.springframework.boot", module = "spring-boot-starter-tomcat")
+    }
+    implementation("org.springframework.boot:spring-boot-starter-jetty")
 
     implementation("tools.jackson.module:jackson-module-kotlin:$jacksonModuleKotlinVersion")
 
     implementation("no.nav.common:log:$commonVersion")
-
     implementation("no.nav.common:rest:$commonVersion") {
         exclude(group = "com.squareup.okhttp3", module = "okhttp")
     }
 
     implementation("no.nav.security:token-validation-spring:$tokenValidationVersion")
-
     implementation("com.squareup.okhttp3:okhttp-jvm:$okHttpVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-
     testImplementation("com.squareup.okhttp3:mockwebserver:$okHttpVersion")
 }
 
