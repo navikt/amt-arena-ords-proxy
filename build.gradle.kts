@@ -19,7 +19,7 @@ repositories {
     maven("https://github-package-registry-mirror.gc.nav.no/cached/maven-release")
 }
 
-val jacksonModuleKotlinVersion = "3.2.2"
+val jacksonModuleKotlinVersion = "3.2.3"
 val commonVersion = "4.2026.09.24_06.17-80dfc0eacb29"
 val tokenValidationVersion = "6.0.12"
 val okHttpVersion = "5.5.0"
@@ -27,8 +27,8 @@ val okHttpVersion = "5.5.0"
 dependencyManagement {
     dependencies {
         // Override Spring Boot's managed Jackson versions to apply the security fixes in 3.1.7.
-        dependency("tools.jackson.core:jackson-core:3.1.7")
-        dependency("tools.jackson.core:jackson-databind:3.1.7")
+        dependency("tools.jackson.core:jackson-core:3.2.3")
+        dependency("tools.jackson.core:jackson-databind:3.2.3")
     }
 }
 
