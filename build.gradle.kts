@@ -25,6 +25,13 @@ val tokenValidationVersion = "7.0.1"
 val okHttpVersion = "5.5.0"
 
 dependencies {
+    constraints {
+        implementation("at.yawk.lz4:lz4-java") {
+            version { strictly("1.11.4") }
+            because("Fixes CVE-2026-59949")
+        }
+    }
+
     runtimeOnly("org.springframework.boot:spring-boot-starter-validation") // ikke fjern
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web") {
