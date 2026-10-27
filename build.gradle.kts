@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     val kotlinVersion = "2.4.21"
 
-    id("org.springframework.boot") version "4.1.1"
+    id("org.springframework.boot") version "4.1.2"
     id("io.spring.dependency-management") version "1.1.7"
 
     kotlin("jvm") version kotlinVersion
@@ -19,27 +19,12 @@ repositories {
     maven("https://github-package-registry-mirror.gc.nav.no/cached/maven-release")
 }
 
-val jacksonModuleKotlinVersion = "3.2.3"
+val jacksonModuleKotlinVersion = "3.2.4"
 val commonVersion = "4.2026.09.24_06.17-80dfc0eacb29"
 val tokenValidationVersion = "7.0.1"
 val okHttpVersion = "5.5.0"
 
-dependencyManagement {
-    dependencies {
-        // Override Spring Boot's managed Jackson versions to apply the security fixes in 3.1.7.
-        dependency("tools.jackson.core:jackson-core:3.1.7")
-        dependency("tools.jackson.core:jackson-databind:3.1.7")
-    }
-}
-
 dependencies {
-    constraints {
-        implementation("at.yawk.lz4:lz4-java") {
-            version { strictly("1.11.4") }
-            because("Fixes CVE-2026-59949")
-        }
-    }
-
     runtimeOnly("org.springframework.boot:spring-boot-starter-validation") // ikke fjern
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web") {
